@@ -1,35 +1,50 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
-import NewChat from "./NewChat"
+import NewChat from "./NewChat";
 import { db } from "../../firebase";
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { DocumentReference, collection, getFirestore, orderBy, query } from "firebase/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
+import {
+  DocumentReference,
+  collection,
+  getFirestore,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import ChatRow from "./ChatRow";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import ModelSelection from "./ModelSelection";
 
 const SideBar = () => {
   const { data: session } = useSession();
+  const [engine, setEngine] = useState(null);
 
-  const [chats , loading, error] = useCollection(
-    session && query(collection(db, "users", session?.user?.email!, "chats"), 
-    orderBy("createdAt", "desc"))
+  const [chats, loading, error] = useCollection(
+    session &&
+      query(
+        collection(db, "users", session?.user?.email!, "chats"),
+        orderBy("createdAt", "desc")
+      )
   );
 
-  
   return (
     <div className=" text-white flex flex-col p-2 h-screen text-sm relative">
       <div className="flex-1">
         <div className="overflow-y-auto">
           <NewChat />
-          <div>AI Model selecttion </div>
+          <div className="hidden sm:inline ">
+            <ModelSelection />
+          </div>
           {/* map through chat rows */}
-        
-          {chats?.docs.map(chat => (
-            <ChatRow key={chat.id} id={chat.id} />
-          ))}
-        
-        </div> 
+          <div className="flex flex-col space-y-2 my-2">
+            {loading && 
+              <p className="animate-pulse text-center text-white">Loading Chats...</p>
+            }
+            { 
+              chats?.docs.map((chat) => <ChatRow key={chat.id} id={chat.id} />)
+            }
+          </div>
+        </div>
       </div>
       {session && (
         //create logout? pop up modal
