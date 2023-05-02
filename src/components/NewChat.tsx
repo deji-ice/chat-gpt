@@ -24,7 +24,8 @@ const NewChat = () => {
   };
 
   return (
-    <div onClick={createNewChat} className=" border border-neutral-500 chatRow">
+  
+    <div onClick={createNewChat} className="static border border-neutral-500 chatRow z-1">
       <PlusIcon className="h-4 w-4" />
       <p>New chat</p>
     </div>

@@ -34,19 +34,19 @@ const ChatRow = ({ id }: Props) => {
   return (
     <Link
       href={`/chat/${id}`}
-      className={`rounded-lg px-5 py-3 text-sm flex items-center justify-between
+      className={`rounded-lg px-5 py-3 text-sm flex items-center justify-between 
   hover:bg-gray-700/70 space-x-2 cursor-pointer text-gray-300 ${
     active ? "bg-gray-600/50" : ""
   }
   transition-all duration-200 ease-out`}
     >
-      <div className="flex space-x-2">
+      <div className="flex space-x-2 overflow-x-hidden">
         <ChatBubbleLeftIcon className="h-5 w-5" />
         <p className=" flex-1 hidden md:inline-flex truncate">
           {messages?.docs[messages?.docs.length - 1]?.data().text || "New Chat"}
         </p>
       </div>
-      <TrashIcon onClick={deleteChat} className="h-5 w-5 hover:text-red-700" />
+      <TrashIcon onClick={deleteChat} className={`h-5 w-5 hover:text-red-700 `} />
     </Link>
   );
 };
