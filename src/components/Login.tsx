@@ -12,7 +12,7 @@ const Login = () => {
   return (
     <div className="bg-[#11a37f] h-screen flex flex-col items-center justify-center text-center ">
       <Image
-        src={"https:/links.papareact.com/2i6"}
+        src={"https://links.papareact.com/2i6"}
         width={300}
         height={300}
         alt="logo"
